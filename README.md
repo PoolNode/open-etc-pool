@@ -32,6 +32,9 @@ Clone & compile:
     git config --global http.https://gopkg.in.followRedirects true
     git clone https://github.com/PoolNode/open-etc-pool.git
     cd open-etc-pool
+    cd build
+    chmod 777 env.sh
+    cd ..
     make
 
 Install redis-server.
