@@ -296,6 +296,114 @@ I recommend this deployment strategy:
 * Unlocker and payouts instance - 1x each (strict!)
 * API instance - 1x
 
+### Run Pool
+It is required to run pool by serviced. If it is not, the terminal could be stopped, and pool doesn’t work.
+
+    $ sudo nano /etc/systemd/system/etherpool.service
+
+Copy the following example
+
+```
+[Unit]
+Description=Etherpool
+After=perkle.target
+
+[Service]
+Type=simple
+ExecStart=/home/<your-user-name>/open-perkle-pool/build/bin/open-perkle-pool /home/<your-user-name>/open-perkle-pool/config.json
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then run pool by the following commands
+
+    $ sudo systemctl enable etherpool
+    $ sudo systemctl start etherpool
+
+If you want to debug the node command
+
+    $ sudo systemctl status etherpool
+
+Backend operation has completed so far.
+
+### Open Firewall
+
+Firewall should be opened to operate this service. Whether Ubuntu firewall is basically opened or not, the firewall should be opened based on your situation.
+You can open firewall by opening 80,443,8080,8888,8008.
+
+As you can see above, the frontend of the pool homepage is created. Then, move to the directory, www, which services the file.
+
+Set up nginx.
+
+    $ sudo nano /etc/nginx/sites-available/default
+
+Modify based on configuration file.
+
+    # Default server configuration
+    # nginx example
+
+    upstream api {
+        server 127.0.0.1:8080;
+    }
+
+    server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        root /home/<your-user-name>/www;
+
+        # Add index.php to the list if you are using PHP
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location / {
+                # First attempt to serve request as file, then
+                # as directory, then fall back to displaying a 404.
+                try_files $uri $uri/ =404;
+        }
+
+        location /api {
+                proxy_pass http://api;
+        }
+
+    }
+
+After setting nginx is completed, run the command below.
+
+    $ sudo service nginx restart
+
+Type your homepage address or IP address on the web.
+If you face screen without any issues, pool installation has completed.
+
+### Extra) How To Secure the pool frontend with Let's Encrypt (https)
+
+First, install the Certbot's Nginx package with apt-get
+
+```
+$ sudo add-apt-repository ppa:certbot/certbot
+$ sudo apt-get update
+$ sudo apt-get install python-certbot-nginx
+```
+
+And then open your nginx setting file, make sure the server name is configured!
+
+```
+$ sudo nano /etc/nginx/sites-available/default
+. . .
+server_name <your-pool-domain>;
+. . .
+```
+
+Change the _ to your pool domain, and now you can obtain your auto-renewaled ssl certificate for free!
+
+```
+$ sudo certbot --nginx -d <your-pool-domain>
+```
+
+Now you can access your pool's frontend via https! Share your pool link!
+
+
 ### Notes
 
 * Unlocking and payouts are sequential, 1st tx go, 2nd waiting for 1st to confirm and so on. You can disable that in code. Carefully read `docs/PAYOUTS.md`.
