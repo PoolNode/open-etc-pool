@@ -1,19 +1,14 @@
-## Open Source Ethereum Classic Mining Pool
-
-### WARNING: This code is currently configured for the Ethereum Classic main network
-
-### Features
-
-**This pool is being further developed to provide an easy to use pool for Ethereum Classic miners. This software is functional however an optimised release of the pool is expected soon. Testing and bug submissions are welcome!**
+## Features
 
 * Support for HTTP and Stratum mining
 * Detailed block stats with luck percentage and full reward
 * Failover geth instances: geth high availability built in
-* Modern beautiful Ember.js frontend
 * Separate stats for workers: can highlight timed-out workers so miners can perform maintenance of rigs
 * JSON-API for stats
+* New vue based UI
+* Supports Ethereum Classic, Mordor, Ethereum, Ropsten & Ubiq.
 
-### Building on Linux
+## Building on Linux
 
 Dependencies:
 
@@ -25,7 +20,9 @@ Dependencies:
 
 **I highly recommend to use Ubuntu 20.04 LTS.**
 
-First install  [core-geth](https://github.com/etclabscore/core-geth/releases).
+(ETC) First install  [core-geth](https://github.com/etclabscore/core-geth/releases).
+
+(ETH) First install (https://geth.ethereum.org/downloads/).
 
 Clone & compile:
 
