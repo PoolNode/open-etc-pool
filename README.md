@@ -310,7 +310,7 @@ After=perkle.target
 
 [Service]
 Type=simple
-ExecStart=/home/<your-user-name>/open-perkle-pool/build/bin/open-perkle-pool /home/<your-user-name>/open-perkle-pool/config.json
+ExecStart=/home/<your-user-name>/open-perkle-pool/build/bin/open-etc-pool /home/<your-user-name>/open-etc-pool/config.json
 
 [Install]
 WantedBy=multi-user.target
