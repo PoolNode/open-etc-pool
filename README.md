@@ -22,7 +22,7 @@ Dependencies:
 
 (ETC) First install  [core-geth](https://github.com/etclabscore/core-geth/releases).
 
-(ETH) First install (https://geth.ethereum.org/downloads/).
+(ETH) First install [ETH-geth](https://geth.ethereum.org/downloads/).
 
 Clone & compile:
 
